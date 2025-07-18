@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/facturas")
+@RequestMapping("/api/facturas/facturas")
 @RequiredArgsConstructor
 public class FacturaController {
 
     private final FacturaService facturaService;
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<FacturaResponse>> listar() {
         return ResponseEntity.ok(facturaService.listar());
     }
