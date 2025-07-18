@@ -58,6 +58,15 @@ public class PagoServiceImpl implements PagoService {
                 .stream().map(this::mapToResponse).collect(Collectors.toList());
     }
 
+    @Override
+    public List<PagoResponse> obtenerTodos() {
+        return pagoRepository.findAll()
+                .stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+
     private PagoResponse mapToResponse(Pago pago) {
         return PagoResponse.builder()
                 .id(pago.getId())

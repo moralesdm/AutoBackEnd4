@@ -10,4 +10,5 @@ public interface PagoService {
     PagoResponse procesarPago(PagoRequest request);
     List<PagoResponse> pagosPorUsuario(Long usuarioId);
     List<PagoResponse> pagosPorReserva(Long reservaId);
+    List<PagoResponse> obtenerTodos();
 }

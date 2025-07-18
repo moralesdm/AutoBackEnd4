@@ -30,6 +30,12 @@ public class PagoController {
     public ResponseEntity<List<PagoResponse>> porReserva(@PathVariable Long id) {
         return ResponseEntity.ok(pagoService.pagosPorReserva(id));
     }
+
+    @GetMapping
+    public ResponseEntity<List<PagoResponse>> obtenerTodos() {
+        return ResponseEntity.ok(pagoService.obtenerTodos());
+    }
+
 }
 
 
