@@ -49,13 +49,17 @@ public class PagoServiceImpl implements PagoService {
     @Override
     public List<PagoResponse> pagosPorUsuario(Long usuarioId) {
         return pagoRepository.findByUsuarioId(usuarioId)
-                .stream().map(this::mapToResponse).collect(Collectors.toList());
+                .stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<PagoResponse> pagosPorReserva(Long reservaId) {
         return pagoRepository.findByReservaId(reservaId)
-                .stream().map(this::mapToResponse).collect(Collectors.toList());
+                .stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -66,6 +70,35 @@ public class PagoServiceImpl implements PagoService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public PagoResponse actualizarPago(Long id, PagoRequest request) {
+        Pago pago = pagoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pago no encontrado"));
+
+        usuario usuario = usuarioRepository.findById(request.getUsuarioId())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Reserva reserva = reservaRepository.findById(request.getReservaId())
+                .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+
+        MetodoPago metodo = MetodoPago.valueOf(request.getMetodoPago().toUpperCase());
+
+        pago.setMonto(request.getMonto());
+        pago.setMetodoPago(metodo);
+        pago.setUsuario(usuario);
+        pago.setReserva(reserva);
+        pago.setFecha(LocalDateTime.now());
+
+        return mapToResponse(pagoRepository.save(pago));
+    }
+
+    @Override
+    public void eliminarPago(Long id) {
+        if (!pagoRepository.existsById(id)) {
+            throw new RuntimeException("Pago no encontrado");
+        }
+        pagoRepository.deleteById(id);
+    }
 
     private PagoResponse mapToResponse(Pago pago) {
         return PagoResponse.builder()
@@ -78,4 +111,3 @@ public class PagoServiceImpl implements PagoService {
                 .build();
     }
 }
-

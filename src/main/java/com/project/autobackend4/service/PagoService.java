@@ -11,4 +11,6 @@ public interface PagoService {
     List<PagoResponse> pagosPorUsuario(Long usuarioId);
     List<PagoResponse> pagosPorReserva(Long reservaId);
     List<PagoResponse> obtenerTodos();
+    PagoResponse actualizarPago(Long id, PagoRequest request);
+    void eliminarPago(Long id);
 }
