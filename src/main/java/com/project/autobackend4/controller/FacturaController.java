@@ -15,7 +15,7 @@ public class FacturaController {
 
     private final FacturaService facturaService;
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<FacturaResponse>> listar() {
         return ResponseEntity.ok(facturaService.listar());
     }
